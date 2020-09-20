@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="utf-8">
+        <title>Main Page</title>
+    </head>
+    <style media="screen">
+        body{
+            background-image: url("{% static 'mainPage/images/background_home.jpg' %}");
+            background-size: cover;
+            opacity: 10;
+        }
+        ul.ui-autocomplete {
+        color: white !important;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        font-size:20px;
+        margin:10px;
+        padding:20px;
+        background-color: grey;
+    }
+    </style>
+    <body>
+        <div class="container" style="position: absolute; left:10%;">
+            <div class="text text-center" style="font-family:sans-serif;position:relative;left:35%;top:10px;margin:10px;color:red;background-color:#1e4dd4;font-size:30px;width:50%;">
+                <span>Movie Recommendation System</span>
+            </div>
+            <div class="" style="margin:20px;">
+                <form class="" action="/search" method="post" >
+                    {% csrf_token %}
+                    <div class="form-group shadow-textarea" style="text-align: center;color: white;position:relative;left:20%; height:auto; width:110%">
+                        <div class="ui-widget">
+                            <input type="text" name="movie" class="movie form-control text text-center" id="movie_input" autocomplete="off" placeholder="Enter the Movie Name" style="background-color: #ffffff;border-color:#ffffff;width: 80%;color: #181818;font-size:30px; border-radius:20px;border-color:yellow;s" required="required" />
+                            <div class="" style=" position:absolute;left:77%;top:15%; color:red;" onclick="href:'/'">
+                                <i class="fa fa-search" style="font-size:24px;"></i>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <input type="submit" name="" value="Search" id='movie_btn' class="btn btn-danger" style="position: relative;left:60%;font-size:20px;">
+                </form>
+
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        // window.onload=initAll;
+        // function initAll(){
+            var movie_name=document.getElementById('movie_input');
+            var mylist={{movie_list|safe}};
+            var arr=[];
+            movie_name.addEventListener('input',function(){
+                if(movie_name.value){
+                    arr=mylist.filter(mylist=>mylist.toLowerCase().includes(movie_name.value));
+                }
+                // console.log(arr);
+            })
+        // }
+    </script>
+    <script>
+            $(document).ready(function(){
+                var mylist={{movie_list|safe}};
+                $("#movie_input").autocomplete({
+                    source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(mylist, request.term);
+                    response(results.slice(0, 10));
+                }
+                });
+            });
+    </script>
+</html>
