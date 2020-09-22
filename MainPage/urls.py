@@ -6,5 +6,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('search',views.search,name="search")
+    path('search',views.search,name="search"),
+    path('searching/<str:movieName>',views.searching,name="searching"),
+
 ]

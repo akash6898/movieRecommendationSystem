@@ -22,7 +22,7 @@
     </head>
     <style media="screen">
         body{
-            /* background-image: url("{% static 'mainPage/images/images.jpg' %}"); */
+            background-image: url("{% static 'mainPage/images/images.jpg' %}");
             background-color: yellow;
             opacity: 1;
         }
@@ -38,12 +38,10 @@
     main{
         width :95%;
         margin : 20px auto;
-        border: 1px solid red;
         display: grid;
-        grid-template-rows: 250px 350px 800px 700px;
         grid-template-columns: repeat(3,1fr) 100px;
         grid-gap: 20px;
-        background-image: url("{% static 'mainPage/images/images.jpg' %}");
+
     }
     .div1{
             /* background-color: red; */
@@ -52,6 +50,7 @@
     .div2{
         position: relative;
         left: 40px;
+        top: 50px;
     }
     .div3{
         /* background-color: white; */
@@ -63,6 +62,8 @@
     }
     .div5{
         /* background-color: pink; */
+        position: relative;
+        top: 10%;
         grid-column: 1/-1;
     }
     .card-image{
@@ -70,6 +71,51 @@
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         background-size: cover;
+    }
+    .card{
+        position: relative;
+        top: 5%;
+        left: 10%;
+        height: 802px;
+        width: 302px;
+        tranform : translate(-50%,50%);
+        tranform-style:preserve-3d;
+        perspective: 600px;
+        transition : 0.5s;
+        border-radius: 80px;
+    }
+    .card-front{
+        height:100%;
+        width: 100%px;
+        background-size: cover;
+        position :absolute;
+        top:0;
+        left: 0;
+        background-color: #fff;
+        backface-visibility: hidden;
+        transform: rotateX(0deg);
+        transition:0.5s;
+        border-radius: 80px;
+    }
+    .card-back{
+        width: 100%;
+        height: 800px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: blue;
+        backface-visibility: hidden;
+        transform: rotateX(180deg);
+        transition:0.5s;
+        color: white;
+        text-align: center;
+        border-radius: 80px;
+    }
+    .card:hover .card-front{
+        transform: rotateX(-180deg);
+    }
+    .card:hover .card-back{
+        transform: rotateX(0deg);
     }
     </style>
     <body>
@@ -91,26 +137,126 @@
                             </div>
                         </div>
                         <input type="submit" name="" value="Search" id='movie_btn' class="btn btn-danger" style="position: relative;left:50%;font-size:20px;">
+                        {% if from_search %}
+                            {% for movie in mainMovieList %}
+                                <div class="text text-left p-4 " style="color: white; font-size: 50px; position: relative; left: 45%; top: 10%;">
+                                    <span style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">{{movie.originalTitle}}</span><br>
+                                    <br>
+                                    <br>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </form>
 
                 </div>
             </div>
-            <!-- {% if from_search %} -->
-            <div class="div2" style="border-radius:30px;">
-                <div class="card" style="background-color:#0000ff;">
-                        <div class="card-image mx-auto p-4">
-                            <img src="https://image.tmdb.org/t/p/w500/qgjMfefsKwSYsyCaIX46uyOXIpy.jpg" height="350px" width="350px">
+            {% if from_search %}
+
+            <div class="div2" style="position: absolute; top: 40%;">
+                <!-- <div class="card" > -->
+                        <div class="card-image mx-auto p-8" style=" position: relative;left: 100px; top: 0%;">
+                                {% for movie in mainMovieList %}
+                                <img src={{movie.moviePoster}}  height="350px" width="350px" style="border-radius: 40px">
+                                {% endfor %}
                         </div>
+                <!-- </div> -->
+            </div>
+            <div class="div3 text text-left p-4 " style="color: white; font-size: 20px; position: absolute; left: 30%; top: 40%;">
+                {% for movie in mainMovieList %}
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Title: {{movie.originalTitle}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">
+                        OverView<br><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;" style="color: white;">{{movie.overView}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">
+                    </h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">voteAverage: {{movie.voteAverage}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">voteCount: {{movie.voteCount}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Adult:{{movie.adult}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Release Date:{{movie.releaseDate}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Language:{{movie.Language}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                {% endfor %}
+            </div>
+
+            <div class="div4" style="position: absolute; top:80%;">
+                <div class="text mx-auto" style=" position:  relative;font-size: 80px; color: white; left: 45%; top:5%;">
+                        <span style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">TOP CAST</span><br>
+                        <h4 style="position: relative; left: 2%; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">click on actor for details</h4>
                 </div>
-            </div>
-            <div class="div3 text text-left p-4 " style="color: white; font-size: 20px; position: relative; left: 10%;">
-                <span>details</span>
-            </div>
-            <div class="div4">
+                <div class="row">
+                    {% for movie in mainMovieList %}
+                        {% for actor in movie.actorList %}
+                            <div class="col-lg-2 m-4 p-4">
+                                <div class="card">
+                                    <button type="button" name="button" class="button1" id="mySignUp" data-target="#mymodal{{actor.actorId}}" data-toggle="modal">
+                                    <div class="card-front">
+                                            <img src={{actor.actorProfilePhoto}}  height="800px" width="302px" style="border-radius: 80px">
+                                    </div>
+                                    <div class="card-back">
+                                        <div class="text text-justify" style="position: relative; top:10%; left: 10%;">
+                                            <h3 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Character_Name:</h3><h5>{{actor.actorCharacter}}</h5> <br>
+                                            <h3 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Actor_Name:</h3><h5>{{actor.actorName}}</h5><br>
+                                            <h3 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Actor_Birthday:</h3><h5>{{actor.actorBirthday}}</h5><br>
+                                            <br>
+                                            <h3 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Actor_Department:</h3><h5>{{actor.actorDepartment}}</h5>
+                                            <!-- <h3 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">biography:</h3> <p style="width:260px; height: 100px;word-break: break-all">{{actor.actorBiography}}</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </button>
+          <div class="modal" id="mymodal{{actor.actorId}}">
+              <div class="modal-dialog modal-lg">
+              <div class="modal-container">
+                  <div class="modal-content">
+                      <div class="" style="background-color:white;width: 125%;height: 1134px;">
+
+                      <div class="modal-header" style="background-color: red;">
+                              <h3 style="position: absolute; left: 30%">{{actor.actorName}}</h3><br>
+                              <button type="button" name="close " class="text-danger" data-dismiss="modal" style="border: 2px solid white; cursor:pointer;">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                          <img src={{actor.actorProfilePhoto}}  height="1000px" width="402px" style="border-radius: 80px; position : absolute; top:30px;">
+                          <div class="text" style="position : relative; left:500px;">
+                              <div class="text text-justify" style="position: absolute; top:10%; left: -5%;">
+                                  <h3>Character_Name:</h3><h5>{{actor.actorCharacter}}</h5> <br>
+                                  <h3>Actor_Name:</h3><h5>{{actor.actorName}}</h5><br>
+                                  <h3>Actor_Birthday:</h3><h5>{{actor.actorBirthday}}</h5><br>
+                                  <br>
+                                  <h3>Actor_Department:</h3><h5>{{actor.actorDepartment}}</h5>
+                                  <h3>biography:</h3> <p style="width:500px; height: 100px;word-break: break-all">{{actor.actorBiography}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+              </div>
+             </div>
+          </div>
+
+
+                        {% endfor %}
+                    {% endfor %}
+                </div>
                 <span>reviews</span>
             </div>
-            <div class="div5">
-                <span>Suggestions</span>
+            <div class="div5" style=" position: relative; top: 2200px;">
+                <div class="text text-center">
+                    <h1 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; color:white;">Recommended Movies</h1>
+                </div>
+                <div class="row">
+                    {% for movie in movieDetailList %}
+                        <div class="col-lg-2 m-4 p-4">
+                            <div class="card" style="height: 500px; width:300px;">
+                                <a href="/searching/{{movie.originalTitle}}">
+                                <div class="card-front1" style="background-color: white; border-radius:20px;">
+                                    <img src={{movie.moviePoster}}  height="500px" width="300px" style="border-radius: 80px">
+                                    <h4 style="text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px darkblue;">{{movie.originalTitle}}</h4>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <!-- {% endif %} -->
         </main>
