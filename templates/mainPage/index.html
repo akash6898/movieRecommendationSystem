@@ -117,9 +117,33 @@
     .card:hover .card-back{
         transform: rotateX(0deg);
     }
+    .loader{
+        position: fixed;
+        z-index: 99;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .loader.hidden{
+        animation: fadeOut 1s;
+        animation-fill-mode: forwards;
+    }
+    @@keyframes fadeOut {
+        100% {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
     </style>
     <body>
         <main>
+            <div class="shashwat" id="shashwat_c">
+
+            </div>
             <div class="div1">
                 <div class="text text-center" style="font-family:sans-serif;position:relative;left:30%;top:10px;margin:10px;color:red;background-color:#1e4dd4;font-size:30px;width:50%;">
                     <span>Movie Recommendation System</span>
@@ -247,7 +271,7 @@
                     {% for movie in movieDetailList %}
                         <div class="col-lg-2 m-4 p-4">
                             <div class="card" style="height: 500px; width:300px;">
-                                <a href="/searching/{{movie.originalTitle}}">
+                                <a  href="/searching/{{movie.originalTitle}}" id="{{movie.id}}" >
                                 <div class="card-front1" style="background-color: white; border-radius:20px;">
                                     <img src={{movie.moviePoster}}  height="500px" width="300px" style="border-radius: 80px">
                                     <h4 style="text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px darkblue;">{{movie.originalTitle}}</h4>
@@ -259,11 +283,16 @@
                 </div>
             </div>
             <!-- {% endif %} -->
+            <script type="text/javascript">
+                window.addEventListener("load",function(){
+                    const loader = document.querySelector('.loader');
+                    loader.style.display = 'none'
+                    loader.remove();
+                })
+            </script>
         </main>
     </body>
     <script type="text/javascript">
-        // window.onload=initAll;
-        // function initAll(){
             var movie_name=document.getElementById('movie_input');
             var mylist={{movie_list|safe}};
             var arr=[];
@@ -271,9 +300,61 @@
                 if(movie_name.value){
                     arr=mylist.filter(mylist=>mylist.toLowerCase().includes(movie_name.value));
                 }
-                // console.log(arr);
             })
-        // }
+            var buttonClick=document.getElementById('movie_btn');
+            buttonClick.onclick=loadLoader;
+            function loadLoader(){
+                console.log(buttonClick)
+                var shashwat=document.getElementById('shashwat_c');
+                var div1 = document.createElement('div');
+                div1.classList.add("loader");
+                    var imgD = document.createElement('img');
+                    imgD.src="{% static 'mainPage/images/loader.gif' %}";
+                    div1.append(imgD);
+                shashwat.append(div1);
+            }
+            var anchorTag1=document.getElementById("1");
+            var anchorTag2=document.getElementById("2");
+            var anchorTag3=document.getElementById("3");
+            var anchorTag4=document.getElementById("4");
+            var anchorTag5=document.getElementById("5");
+            var anchorTag6=document.getElementById("6");
+            var anchorTag7=document.getElementById("7");
+            var anchorTag8=document.getElementById("8");
+            var anchorTag9=document.getElementById("9");
+            var anchorTag10=document.getElementById("10");
+            console.log(anchorTag1);
+            console.log(anchorTag2);
+            console.log(anchorTag3);
+            console.log(anchorTag4);
+            console.log(anchorTag5);
+            console.log(anchorTag6);
+            console.log(anchorTag7);
+            console.log(anchorTag8);
+            console.log(anchorTag9);
+            console.log(anchorTag10);
+
+            anchorTag1.onclick=loadAnchorLoader;
+            anchorTag2.onclick=loadAnchorLoader;
+            anchorTag3.onclick=loadAnchorLoader;
+            anchorTag4.onclick=loadAnchorLoader;
+            anchorTag5.onclick=loadAnchorLoader;
+            anchorTag6.onclick=loadAnchorLoader;
+            anchorTag7.onclick=loadAnchorLoader;
+            anchorTag8.onclick=loadAnchorLoader;
+            anchorTag9.onclick=loadAnchorLoader;
+            anchorTag10.onclick=loadAnchorLoader;
+
+            function loadAnchorLoader(){
+                console.log("loaded");
+                var shashwat=document.getElementById('shashwat_c');
+                var div1 = document.createElement('div');
+                div1.classList.add("loader");
+                    var imgD = document.createElement('img');
+                    imgD.src="{% static 'mainPage/images/loader.gif' %}";
+                    div1.append(imgD);
+                shashwat.append(div1);
+            }
     </script>
     <script>
             $(document).ready(function(){

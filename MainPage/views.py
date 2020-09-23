@@ -8,7 +8,8 @@ import json
 # personal details
 # https://api.themoviedb.org/3/person/776?api_key=5492165c61b1a21c06eb3a3b578a6339&language=en-US
 class MOVIE:
-    def __init__(self,moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList):
+    def __init__(self,id,moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList):
+        self.id=id
         self.moviePoster=moviePoster
         self.adult=adult
         self.budget=budget
@@ -112,6 +113,7 @@ def getDetails(movieList):
     from tmdbv3api import Movie
     tmdb_movie = Movie()
     movieDetailList=list()
+    i=1
     for movie in movieList:
         ##################################################################
         ######################  GETTING DETAILS OF MOVIE #################
@@ -133,8 +135,9 @@ def getDetails(movieList):
         response = requests.get('https://api.themoviedb.org/3/movie/{}/credits?api_key={}'.format(movie_id,tmdb.api_key))
         data_json=response.json()
         actorList=list()
-        x=MOVIE(moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList)
+        x=MOVIE(i,moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList)
         movieDetailList.append(x)
+        i=i+1
     return movieDetailList
 
 
@@ -305,6 +308,6 @@ def getDetailsOfMainMovie(movie):
     actorList.append(a7)
     actorList.append(a8)
 
-    x=MOVIE(moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList)
+    x=MOVIE(0,moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList)
     movieDetailList.append(x)
     return movieDetailList
