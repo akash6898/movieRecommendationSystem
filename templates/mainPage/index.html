@@ -22,8 +22,8 @@
     </head>
     <style media="screen">
         body{
-            background-image: url("{% static 'mainPage/images/images.jpg' %}");
-            background-color: yellow;
+            background-image: url("{% static 'mainPage\\images\\joker.jpg'  %}");
+            background-size: 1700px 1070px;
             opacity: 1;
         }
         ul.ui-autocomplete {
@@ -39,8 +39,11 @@
         width :95%;
         margin : 20px auto;
         display: grid;
-        grid-template-columns: repeat(3,1fr) 100px;
+        /* grid-template-columns: repeat(3,1fr) 100px; */
         grid-gap: 20px;
+        /* background-image: url("{% static 'mainPage\\images\\joker.jpg'  %}");
+        background-size: 1700px 1070px;
+        opacity: 1; */
 
     }
     .div1{
@@ -145,7 +148,7 @@
 
             </div>
             <div class="div1">
-                <div class="text text-center" style="font-family:sans-serif;position:relative;left:30%;top:10px;margin:10px;color:red;background-color:#1e4dd4;font-size:30px;width:50%;">
+                <div class="text text-center" style="font-family:sans-serif;position:relative;left:30%;top:10px;margin:10px;color:red;text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:50px;width:50%;">
                     <span>Movie Recommendation System</span>
                 </div>
                 <div class="" style="margin:20px;">
@@ -187,15 +190,13 @@
             </div>
             <div class="div3 text text-left p-4 " style="color: white; font-size: 20px; position: absolute; left: 30%; top: 40%;">
                 {% for movie in mainMovieList %}
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Title: {{movie.originalTitle}}</h7><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">
-                        OverView<br><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;" style="color: white;">{{movie.overView}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">
-                    </h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">voteAverage: {{movie.voteAverage}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">voteCount: {{movie.voteCount}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Adult:{{movie.adult}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Release Date:{{movie.releaseDate}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
-                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;">Language:{{movie.Language}}</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue; font-size:30px;">Title:</h7> <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white; font-size:20px;"> {{movie.originalTitle}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">OverView<br></h7><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;">{{movie.overView}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">voteAverage:</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"> <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;font-size:20px;">{{movie.voteAverage}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">voteCount:</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;font-size:20px;"> {{movie.voteCount}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">Adult:</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;font-size:20px;">{{movie.adult}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">Release Date:</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;font-size:20px;">{{movie.releaseDate}}</h7><br>
+                    <h7 style="text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px darkblue;font-size:30px;">Language:</h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;"><h7 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;color: white;font-size:20px;">{{movie.Language}}</h7><br>
                 {% endfor %}
             </div>
 
@@ -274,7 +275,7 @@
                                 <a  href="/searching/{{movie.originalTitle}}" id="{{movie.id}}" >
                                 <div class="card-front1" style="background-color: white; border-radius:20px;">
                                     <img src={{movie.moviePoster}}  height="500px" width="300px" style="border-radius: 80px">
-                                    <h4 style="text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px darkblue;">{{movie.originalTitle}}</h4>
+                                    <h4 style="position: relative; left:40px;text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px darkblue;">{{movie.originalTitle}}</h4>
                                 </div>
                             </a>
                             </div>

@@ -123,13 +123,19 @@ def getDetails(movieList):
         movie_id = result[0].id
         response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}'.format(movie_id,tmdb.api_key))
         data_json = response.json()
-        moviePoster="https://image.tmdb.org/t/p/w500"+data_json['poster_path']
+        if data_json['poster_path']!=None:
+            moviePoster="https://image.tmdb.org/t/p/w500"+data_json['poster_path']
+        else:
+            moviePoster=''
         adult=data_json['adult']
         budget=data_json['budget']
         originalTitle=data_json['original_title']
         overView=data_json['overview']
         releaseDate=data_json['release_date']
-        Language=data_json['spoken_languages'][0]['name']
+        try:
+            Language=data_json['spoken_languages'][0]['name']
+        except:
+            Language='Not found'
         voteAverage=data_json['vote_average']
         voteCount=data_json['vote_count']
         response = requests.get('https://api.themoviedb.org/3/movie/{}/credits?api_key={}'.format(movie_id,tmdb.api_key))
@@ -159,13 +165,19 @@ def getDetailsOfMainMovie(movie):
     movie_id = result[0].id
     response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}'.format(movie_id,tmdb.api_key))
     data_json = response.json()
-    moviePoster="https://image.tmdb.org/t/p/w500"+data_json['poster_path']
+    if data_json['poster_path']!=None:
+        moviePoster="https://image.tmdb.org/t/p/w500"+data_json['poster_path']
+    else:
+        moviePoster=''
     adult=data_json['adult']
     budget=data_json['budget']
     originalTitle=data_json['original_title']
     overView=data_json['overview']
     releaseDate=data_json['release_date']
-    Language=data_json['spoken_languages'][0]['name']
+    try:
+        Language=data_json['spoken_languages'][0]['name']
+    except:
+        Language='Not found'
     voteAverage=data_json['vote_average']
     voteCount=data_json['vote_count']
     response = requests.get('https://api.themoviedb.org/3/movie/{}/credits?api_key={}'.format(movie_id,tmdb.api_key))
@@ -235,6 +247,23 @@ def getDetailsOfMainMovie(movie):
             actor8ProfilePhoto="https://image.tmdb.org/t/p/w500"+data_json['cast'][7]['profile_path']
         actor8Character=data_json['cast'][7]['character']
 
+        actor9Id=data_json['cast'][8]['id']
+        actor9Name=data_json['cast'][8]['name']
+        if(data_json['cast'][8]['profile_path']==None):
+            actor9ProfilePhoto="templates\\mainPage\\images\\blank_man.jpg"
+        else:
+            actor9ProfilePhoto="https://image.tmdb.org/t/p/w500"+data_json['cast'][8]['profile_path']
+        actor9Character=data_json['cast'][8]['character']
+
+        actor10Id=data_json['cast'][9]['id']
+        actor10Name=data_json['cast'][9]['name']
+        if(data_json['cast'][9]['profile_path']==None):
+            actor10ProfilePhoto="templates\\mainPage\\images\\blank_man.jpg"
+        else:
+            actor10ProfilePhoto="https://image.tmdb.org/t/p/w500"+data_json['cast'][9]['profile_path']
+        actor10Character=data_json['cast'][9]['character']
+
+
         response = requests.get('https://api.themoviedb.org/3/person/{}?api_key={}&language=en-US'.format(str(actor1Id),tmdb.api_key))
         data_json=response.json()
         actor1Birthday=data_json['birthday']
@@ -289,6 +318,20 @@ def getDetailsOfMainMovie(movie):
         actor8Department=data_json['known_for_department']
         actor8Biography=data_json['biography']
 
+
+        response = requests.get('https://api.themoviedb.org/3/person/{}?api_key={}&language=en-US'.format(str(actor9Id),tmdb.api_key))
+        data_json=response.json()
+        actor9Birthday=data_json['birthday']
+        actor9Department=data_json['known_for_department']
+        actor9Biography=data_json['biography']
+
+
+        response = requests.get('https://api.themoviedb.org/3/person/{}?api_key={}&language=en-US'.format(str(actor10Id),tmdb.api_key))
+        data_json=response.json()
+        actor10Birthday=data_json['birthday']
+        actor10Department=data_json['known_for_department']
+        actor10Biography=data_json['biography']
+
         a1=Actors(actor1Id,actor1Name,actor1ProfilePhoto,actor1Character,actor1Birthday,actor1Biography,actor1Department)
         a2=Actors(actor2Id,actor2Name,actor2ProfilePhoto,actor2Character,actor2Birthday,actor2Biography,actor2Department)
         a3=Actors(actor3Id,actor3Name,actor3ProfilePhoto,actor3Character,actor3Birthday,actor3Biography,actor3Department)
@@ -297,6 +340,8 @@ def getDetailsOfMainMovie(movie):
         a6=Actors(actor6Id,actor6Name,actor6ProfilePhoto,actor6Character,actor6Birthday,actor6Biography,actor6Department)
         a7=Actors(actor7Id,actor7Name,actor7ProfilePhoto,actor7Character,actor7Birthday,actor7Biography,actor7Department)
         a8=Actors(actor8Id,actor8Name,actor8ProfilePhoto,actor8Character,actor8Birthday,actor8Biography,actor8Department)
+        a9=Actors(actor9Id,actor9Name,actor9ProfilePhoto,actor9Character,actor9Birthday,actor9Biography,actor9Department)
+        a10=Actors(actor10Id,actor10Name,actor10ProfilePhoto,actor10Character,actor10Birthday,actor10Biography,actor10Department)
 
         actorList=list()
         actorList.append(a1)
@@ -307,6 +352,8 @@ def getDetailsOfMainMovie(movie):
         actorList.append(a6)
         actorList.append(a7)
         actorList.append(a8)
+        actorList.append(a9)
+        actorList.append(a10)
 
         x=MOVIE(0,moviePoster,adult,budget,originalTitle,overView,releaseDate,Language,voteAverage,voteCount,actorList)
         movieDetailList.append(x)
